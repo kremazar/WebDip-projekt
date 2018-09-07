@@ -69,6 +69,8 @@ html {
   font-size: 20px;
 }
 .oglas {
+  position: relative;
+  float: left;
   border: 5px solid white;
   height: 300px;
   width: 300px;

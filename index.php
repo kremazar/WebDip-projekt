@@ -34,7 +34,6 @@ if(isset($_POST['trosak']))
         $baza->updateDB($brojac);
     }
 ?>
-<div class="oglas"><a href='index.php?klikovi=true'>klikni ovdje</a></div>  
     <p>Odaberite prijevozno sredstvo: </p>
 
     <form action="" method="POST">
@@ -97,7 +96,6 @@ if(isset($_POST['trosak']))
             <input type="hidden" name="prijevoz" value="<?= $_POST['prijevoz']?>">
             <button type="submit">Filtriraj!</button>
         </form>
-    
     <?php
     }
     if(isset($_GET['id']))
@@ -109,12 +107,41 @@ if(isset($_POST['trosak']))
             <input type="number" name="trosak">
             <input type="hidden" name="prijevoz" value="<?= $odabir?>">
             <button type="submit">Pošalji!</button>
-        </form>
-      
-    </div>
-   
+        </form>   
     <?php
     }
-  
+    ?>
+    <?php
+    $polazista2 = "SELECT * FROM upitnik";
+    $odaberi_polazista = $baza->selectDB($polazista2);
+    ?>
+    <h3>Prosječni troškovi: </h3>
+    <form action="" method="POST">
+        <select name="trosak">
+            <?php while($redovi=mysqli_fetch_array($odaberi_polazista)):; ?>
+                    <option value="<?= $redovi[0]?>"><?php echo $redovi[1]; ?></option>
+            <?php endwhile; ?>
+        </select>
+      <input type="submit" value="Prikaži">
+    </form>
+    <?php
+     $troskovi = "SELECT avg(trosak) FROM odgovor join upitnik on upitnik.ID_upitnik=odgovor.upitnik where upitnik.javno='1'";
+     $odaberi_troskove = $baza->selectDB($troskovi);
+     $polje_troskova=mysqli_fetch_array($odaberi_troskove);
+    if(isset($_GET['trosak']))
+    {
+    ?> 
+        <form action="" method="POST">
+        <input type="hidden" name="prijevoz" value="<?= $polje_troskova[0]?>"> 
+        </form>
+    <?php
+    }
+    ?> 
+    <div class="oglas"><a href='index.php?klikovi=true'>klikni ovdje</a></div>
+    <div class="oglas"><a href='index.php?klikovi=true'>zašto ne radiš</a></div>  
+    <div class="oglas"><a href='index.php?klikovi=true'>klikni ovdje</a></div>    
+    </div>
+    <?php
 include_once './_footer.php';
 ?>
+    

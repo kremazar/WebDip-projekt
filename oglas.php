@@ -5,7 +5,7 @@ $poruka="";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $naziv=$_POST['naziv'];
     $opis=$_POST['opis']; 
-    $slika=$_POST['slika'];
+    $slika=$_FILES['slika'];
     $url=$_POST['url']; 
     $vrsta=$_POST['vrsta'];
     

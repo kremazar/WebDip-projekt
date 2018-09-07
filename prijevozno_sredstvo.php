@@ -6,17 +6,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	
     $prijevozno=$_POST['prijevozno_sredstvo'];
     $broj=$_POST['broj'];
-    $moderatori=$_POST['moderatori'];
-    if($prijevozno == "" || $broj == "" || $moderatori == ""){
+    if($prijevozno == "" || $broj == "" ){
         $poruka = "Popuni sve praznine";
     }
     if(empty($poruka)){
-
     $upit = "INSERT INTO prijevoznoSredstvo (ID_prijevoznoSredstvo,naziv,brojMjesta,datumIzmjene) VALUES (DEFAULT,'$prijevozno', '$broj', now());";
     $baza->updateDB($upit);
-
-    $moderatori = "INSERT INTO moderiranje (ID_prijevoznoSredstvo,moderator,vrijeme) VALUES ('$prijevozno','$moderatori', now());";
-    $nesta=$baza->updateDB($moderatori);
     }
 }
 
@@ -25,6 +20,9 @@ $upit = "SELECT * FROM prijevoznoSredstvo ";
 $rezultat = $baza->selectDB($upit);	
 $upit2 = "SELECT * FROM korisnik where tipKorisnika='2'";
 $rezultat2 = $baza->selectDB($upit2);	
+$prijevozno_sredstvo=mysqli_fetch_array($rezultat);
+$upit3 = "SELECT userName FROM korisnik where tipKorisnika='2'";
+$rezultat3 = $baza->selectDB($upit3);	
 
 ?>
 
@@ -60,9 +58,11 @@ $rezultat2 = $baza->selectDB($upit2);
     <tr>
     <td><?= $sve[1]?></td>      
     <td><?= $sve[2];?></td>
-    </tr>
       <?php endwhile; ?>
-   
+    <?php while($sve2=mysqli_fetch_array($rezultat3)):; ?>
+    <td><?= $sve2[0];?></td>
+        <?php endwhile; ?>
+    </tr>  
   </tbody>
 </table>
 <?php 
@@ -72,21 +72,33 @@ $rezultat2 = $baza->selectDB($upit2);
 <?php if(isset($_GET['dodaj']))
     { 
 ?>
+<p>Dodaj moderatora: </p>
 <form action="" method="post">
+        <label for="prijevozno_sredstvo">Prijevozno sredstvo: </label>
         <select name="prijevozno_sredstvo">
             <?php while($prijevozno_sredstvo=mysqli_fetch_array($rezultat)):; ?>
                     <option value="<?php echo $prijevozno_sredstvo[0]; ?>"><?php echo $prijevozno_sredstvo[1]; ?></option>
             <?php endwhile; ?>
         </select>
+        <br>
+        <label for="moderatori">Moderator:</label>
         <select name="moderatori">
             <?php while($moderatori=mysqli_fetch_array($rezultat2)):; ?>
                     <option value="<?php echo $moderatori[0]; ?>"><?php echo $moderatori[3]; ?></option>
             <?php endwhile; ?>
         </select>
-      <input type="submit" value="Dodaj">
+      <input type="submit" value="Dodaj" name="dodaj">
     </form>
 <?php 
     } 
+?>
+<?php
+if (isset($_POST['dodaj'])){
+$prijevozno=$_POST['prijevozno_sredstvo'];
+$moderatori=$_POST['moderatori'];
+$moderatori_dodaj = "INSERT INTO moderiranje (prijevoznoSredstvo,moderator,vrijeme) VALUES ('$prijevozno','$moderatori', now());";
+$baza->updateDB($moderatori_dodaj);
+}
 ?>
 
 </div>

@@ -12,9 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lozinka=$_POST['lozinka']; 
 
     if (isset($_POST['zapamti'])) {
-        setcookie("kime", $kime, time() + 60 * 60);
+        setcookie("kime", $kime);
     } else {
-        setcookie("kime", $kime, time() - 60);
+        setcookie("kime", $kime);
     }
     $ID = "SELECT ID_korisnik FROM korisnik WHERE userName='$kime'";
     $rezultat = $baza->selectDB($ID);

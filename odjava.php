@@ -1,7 +1,7 @@
 <?php
 include_once './_header.php';
 
-$kime=$_COOKIE['kime'];
+$kime=$_SESSION['kime'];
 
 $ID = "SELECT ID_korisnik FROM korisnik WHERE userName='$kime'";
 $rezultat = $baza->selectDB($ID);

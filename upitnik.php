@@ -11,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $upitOdgovor = "INSERT INTO upitnik (ID_upitnik,polaziste,odrediste,od,do,javno,prijevoznoSredstvo) VALUES (DEFAULT, '$polaziste','$odrediste','$od','$do','0','$prijevozno_sredstvo');";
     $baza->updateDB($upitOdgovor);
-
 }
 $upit = "SELECT * FROM prijevoznoSredstvo";
 $rezultat = $baza->selectDB($upit);

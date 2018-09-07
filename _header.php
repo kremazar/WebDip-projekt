@@ -37,4 +37,5 @@ if (isset($_SESSION['tip'])){
     <?php if (isset($_SESSION['tip'])){ if ($_SESSION['tip']=='2' ){ echo '<a href="blokiranje.php">Blokiraj oglas</a><br>';}} ?>
     <?php if (isset($_SESSION['tip'])){ if ($_SESSION['tip']=='2' ){ echo '<a href="oglas.php">Oglasi</a><br>';}} ?>
     <?php if (isset($_SESSION['tip'])){ if ($_SESSION['tip']=='2' ){ echo '<a href="upitnik.php">Upitnik</a><br>';}} ?>
+    <?php if (isset($_SESSION['tip'])){ if ($_SESSION['tip']=='3' ){ echo '<a href="racuni.php">Korisnički računi</a><br>';}} ?>
 </div>
